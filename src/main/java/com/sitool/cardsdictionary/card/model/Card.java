@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @EqualsAndHashCode(of = {"id", "name"})
 public class Card {
     private static final AtomicInteger counter = new AtomicInteger(0); // for card id generation
-    private final int id;
+    private final long id;
     @Setter
     private String name;
     private Map<String, String> translations = new HashMap<>();
