@@ -1,9 +1,6 @@
 package com.sitool.cardsdictionary.card.service;
 
-import com.sitool.cardsdictionary.card.dto.CardAddDto;
-import com.sitool.cardsdictionary.card.dto.CardDto;
-import com.sitool.cardsdictionary.card.dto.TranslationDeleteDto;
-import com.sitool.cardsdictionary.card.dto.TranslationDto;
+import com.sitool.cardsdictionary.card.dto.*;
 
 import java.util.List;
 
@@ -15,19 +12,19 @@ public interface CardService {
 
     CardDto getCardByName(String name);
 
-    CardDto updateCardById(Integer cardId, String name);
+    CardDto updateCardById(Long cardId, CardUpdateDto name);
 
-    Boolean addTranslationById(Integer cardId, TranslationDto translation);
+    Boolean addTranslationById(Long cardId, TranslationDto translation);
 
-    Boolean updateTranslationById(Integer cardId, TranslationDto translation);
+    Boolean updateTranslationById(Long cardId, TranslationDto translation);
 
-    Boolean deleteTranslationByCardId(Integer cardId, TranslationDeleteDto translation);
+    Boolean deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation);
 
-    Boolean deleteCardById(Integer cardId);
+    CardDto deleteCardById(Long cardId);
 
     List<CardDto> getAllCards();
 
-    List<CardDto> getRandomCards(Integer number);
+    List<CardDto> getRandomCards(Long number);
 
 
 }

@@ -36,7 +36,7 @@ public class Card {
         return translations.put(languageCode, value);
     }
 
-    public boolean removeTranslation(String languageCode, String value) {
+    public boolean removeTranslation(String languageCode) {
         return translations.remove(languageCode) == null;
     }
 }

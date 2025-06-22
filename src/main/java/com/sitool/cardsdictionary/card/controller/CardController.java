@@ -1,9 +1,6 @@
 package com.sitool.cardsdictionary.card.controller;
 
-import com.sitool.cardsdictionary.card.dto.CardAddDto;
-import com.sitool.cardsdictionary.card.dto.CardDto;
-import com.sitool.cardsdictionary.card.dto.TranslationDeleteDto;
-import com.sitool.cardsdictionary.card.dto.TranslationDto;
+import com.sitool.cardsdictionary.card.dto.*;
 import com.sitool.cardsdictionary.card.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,27 +33,27 @@ public class CardController {
     }
 
     @PatchMapping("/word/{cardId}")
-    public CardDto updateCardById(@PathVariable Integer cardId, @RequestBody String name) {
+    public CardDto updateCardById(@PathVariable Long cardId, @RequestBody CardUpdateDto name) {
         return cardService.updateCardById(cardId, name);
     }
 
     @PostMapping("/translation/word/{cardId}")
-    public Boolean addTranslationById(@PathVariable Integer cardId, @RequestBody TranslationDto translation) {
+    public Boolean addTranslationById(@PathVariable Long cardId, @RequestBody TranslationDto translation) {
         return cardService.addTranslationById(cardId, translation);
     }
 
     @PatchMapping("/translation/word/{cardId}")
-    public Boolean updateTranslationById(@PathVariable Integer cardId, @RequestBody TranslationDto translation) {
+    public Boolean updateTranslationById(@PathVariable Long cardId, @RequestBody TranslationDto translation) {
         return cardService.updateTranslationById(cardId, translation);
     }
 
     @DeleteMapping("/translation/word/{cardId}")
-    public Boolean deleteTranslationByCardId(@PathVariable Integer cardId, @RequestBody TranslationDeleteDto translation) {
+    public Boolean deleteTranslationByCardId(@PathVariable Long cardId, @RequestBody TranslationDeleteDto translation) {
         return cardService.deleteTranslationByCardId(cardId, translation);
     }
 
     @DeleteMapping("/word/{cardId}")
-    public Boolean deleteCardById(@PathVariable Integer cardId) {
+    public CardDto deleteCardById(@PathVariable Long cardId) {
         return cardService.deleteCardById(cardId);
     }
 
@@ -66,7 +63,7 @@ public class CardController {
     }
 
     @GetMapping("/words/{number}")
-    public List<CardDto> getRandomCards(@PathVariable Integer number) {
+    public List<CardDto> getRandomCards(@PathVariable Long number) {
         return cardService.getRandomCards(number);
     }
 }

@@ -1,16 +1,12 @@
 package com.sitool.cardsdictionary.card.service;
 
 import com.sitool.cardsdictionary.card.dao.CardRepository;
-import com.sitool.cardsdictionary.card.dto.CardAddDto;
-import com.sitool.cardsdictionary.card.dto.CardDto;
-import com.sitool.cardsdictionary.card.dto.TranslationDeleteDto;
-import com.sitool.cardsdictionary.card.dto.TranslationDto;
+import com.sitool.cardsdictionary.card.dto.*;
 import com.sitool.cardsdictionary.card.dto.exceptions.NotFoundException;
 import com.sitool.cardsdictionary.card.model.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -46,37 +42,54 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public CardDto updateCardById(Integer cardId, String name) {
+    public CardDto updateCardById(Long cardId, CardUpdateDto cardUpdateDto) {
+        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+        card.setName(cardUpdateDto.getName());
+        cardRepository.save(card);
+        return new CardDto(card.getId(), card.getName(), card.getTranslations());
+    }
+
+    @Override
+    public Boolean addTranslationById(Long cardId, TranslationDto translation) {
+        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+        card.addTranslation(translation.getLanguageCode(), translation.getValue());
+        cardRepository.save(card);
+        return true; // TODO: need to think about this
+    }
+
+    @Override
+    public Boolean updateTranslationById(Long cardId, TranslationDto translation) {
+        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+        card.updateTranslation(translation.getLanguageCode(), translation.getValue());
+        cardRepository.save(card);
+        return true; // TODO: need to think about this
+    }
+
+    @Override
+    public Boolean deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation) {
+        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+        card.removeTranslation(translation.getLanguageCode());
         return null;
     }
 
     @Override
-    public Boolean addTranslationById(Integer cardId, TranslationDto translation) {
-        return null;
-    }
-
-    @Override
-    public Boolean updateTranslationById(Integer cardId, TranslationDto translation) {
-        return null;
-    }
-
-    @Override
-    public Boolean deleteTranslationByCardId(Integer cardId, TranslationDeleteDto translation) {
-        return null;
-    }
-
-    @Override
-    public Boolean deleteCardById(Integer cardId) {
-        return null;
+    public CardDto deleteCardById(Long cardId) {
+        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+        cardRepository.deleteById(cardId);
+        return new CardDto(card.getId(), card.getName(), card.getTranslations());
     }
 
     @Override
     public List<CardDto> getAllCards() {
-        return null;
+
+        return cardRepository.findAll().stream().
+                map(card -> new CardDto(card.getId(), card.getName(), card.getTranslations()))
+                .toList();
     }
 
     @Override
-    public List<CardDto> getRandomCards(Integer number) {
+    public List<CardDto> getRandomCards(Long number) {
+        //TODO: Need to implement
         return null;
     }
 }
