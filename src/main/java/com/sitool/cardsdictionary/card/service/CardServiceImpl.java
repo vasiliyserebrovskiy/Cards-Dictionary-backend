@@ -48,7 +48,7 @@ public class CardServiceImpl implements CardService{
         cardRepository.save(card);
         return new CardDto(card.getId(), card.getName(), card.getTranslations());
     }
-
+    //TODO: need to fix error: write null as key !
     @Override
     public Boolean addTranslationById(Long cardId, TranslationDto translation) {
         Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
@@ -69,6 +69,7 @@ public class CardServiceImpl implements CardService{
     public Boolean deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation) {
         Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
         card.removeTranslation(translation.getLanguageCode());
+        cardRepository.save(card);
         return null;
     }
 
