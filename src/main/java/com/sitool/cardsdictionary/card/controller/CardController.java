@@ -12,8 +12,13 @@ import java.util.List;
 
 @RestController
 public class CardController {
+
+    private final CardService cardService;
+
     @Autowired
-    private CardService cardService;
+    public CardController(CardService cardService) {
+        this.cardService = cardService;
+    }
 
     @PostMapping("/word/add")
     public Boolean addCard(@RequestBody CardAddDto card) {
