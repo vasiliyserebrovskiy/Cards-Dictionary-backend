@@ -11,7 +11,7 @@ public interface CardService {
 
     Boolean addCard(CardAddDto card);
 
-    CardDto getCardById(Integer cardId);
+    CardDto getCardById(Long cardId);
 
     CardDto getCardByName(String name);
 

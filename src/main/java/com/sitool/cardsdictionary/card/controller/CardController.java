@@ -25,12 +25,12 @@ public class CardController {
         return cardService.addCard(card);
     }
 
-    @GetMapping("/word/{cardId}")
-    public CardDto getCardById(@PathVariable Integer cardId) {
+    @GetMapping("/word/id/{cardId}")
+    public CardDto getCardById(@PathVariable Long cardId) {
         return cardService.getCardById(cardId);
     }
 
-    @GetMapping("/word/{name}")
+    @GetMapping("/word/name/{name}")
     public CardDto getCardByName(@PathVariable String name) {
         return cardService.getCardByName(name);
     }

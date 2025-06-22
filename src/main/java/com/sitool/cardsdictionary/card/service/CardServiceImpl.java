@@ -1,9 +1,13 @@
 package com.sitool.cardsdictionary.card.service;
 
+import com.sitool.cardsdictionary.card.dao.CardRepository;
 import com.sitool.cardsdictionary.card.dto.CardAddDto;
 import com.sitool.cardsdictionary.card.dto.CardDto;
 import com.sitool.cardsdictionary.card.dto.TranslationDeleteDto;
 import com.sitool.cardsdictionary.card.dto.TranslationDto;
+import com.sitool.cardsdictionary.card.dto.exceptions.NotFoundException;
+import com.sitool.cardsdictionary.card.model.Card;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -11,19 +15,34 @@ import java.util.List;
 
 @Component
 public class CardServiceImpl implements CardService{
-    @Override
-    public Boolean addCard(CardAddDto card) {
-        return null;
+
+    private final CardRepository cardRepository;
+
+    @Autowired
+    public CardServiceImpl(CardRepository cardRepository) {
+        this.cardRepository = cardRepository;
     }
 
     @Override
-    public CardDto getCardById(Integer cardId) {
-        return null;
+    public Boolean addCard(CardAddDto card) {
+        if(cardRepository.findByName(card.getName()).isPresent()) {
+            return false;
+        }
+        Card newCard = new Card(card.getName(), card.getTranslations());
+        cardRepository.save(newCard);
+        return true;
+    }
+
+    @Override
+    public CardDto getCardById(Long cardId) {
+        Card card =  cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+        return new CardDto(card.getId(), card.getName(), card.getTranslations());
     }
 
     @Override
     public CardDto getCardByName(String name) {
-        return null;
+        Card card =  cardRepository.findByName(name).orElseThrow(NotFoundException::new);
+        return new CardDto(card.getId(), card.getName(), card.getTranslations());
     }
 
     @Override
