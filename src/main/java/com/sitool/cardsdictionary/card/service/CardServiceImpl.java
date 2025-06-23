@@ -52,7 +52,7 @@ public class CardServiceImpl implements CardService{
     @Override
     public Boolean addTranslationById(Long cardId, TranslationDto translation) {
         Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        card.addTranslation(translation.getLanguageCode(), translation.getValue());
+        card.addTranslation(translation.getCode(), translation.getValue());
         cardRepository.save(card);
         return true; // TODO: need to think about this
     }
@@ -60,7 +60,7 @@ public class CardServiceImpl implements CardService{
     @Override
     public Boolean updateTranslationById(Long cardId, TranslationDto translation) {
         Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        card.updateTranslation(translation.getLanguageCode(), translation.getValue());
+        card.updateTranslation(translation.getCode(), translation.getValue());
         cardRepository.save(card);
         return true; // TODO: need to think about this
     }
@@ -68,9 +68,9 @@ public class CardServiceImpl implements CardService{
     @Override
     public Boolean deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation) {
         Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        card.removeTranslation(translation.getLanguageCode());
+        card.removeTranslation(translation.getCode());
         cardRepository.save(card);
-        return null;
+        return true; //TODO: need to think about this
     }
 
     @Override

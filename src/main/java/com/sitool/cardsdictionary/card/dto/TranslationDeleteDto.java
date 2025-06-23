@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class TranslationDeleteDto {
-    private String languageCode;
+    private String code;
 }
