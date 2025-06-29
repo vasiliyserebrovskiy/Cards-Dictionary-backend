@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Cards-Dictionary-App
+
+  datasource:
+    url: jdbc:postgresql://cards-cards-dictionary.c.aivencloud.com:12753/defaultdb
+    username: avnadmin
+    password: ${AIVEN_PASS}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
