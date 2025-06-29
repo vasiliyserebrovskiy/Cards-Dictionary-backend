@@ -1,14 +1,12 @@
 package com.sitool.cardsdictionary.card.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(of = {"id"})
+@ToString
 @Entity
 @Table(name = "translations")
 public class Translation {

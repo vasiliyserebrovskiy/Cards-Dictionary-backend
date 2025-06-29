@@ -3,7 +3,6 @@ package com.sitool.cardsdictionary.card.controller;
 import com.sitool.cardsdictionary.card.dto.*;
 import com.sitool.cardsdictionary.card.service.CardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,12 +39,12 @@ public class CardController {
     }
 
     @PatchMapping("/translation/word/{cardId}")
-    public Boolean updateTranslationById(@PathVariable Long cardId, @RequestBody TranslationDto translation) {
+    public CardDto updateTranslationById(@PathVariable Long cardId, @RequestBody TranslationDto translation) {
         return cardService.updateTranslationById(cardId, translation);
     }
 
     @DeleteMapping("/translation/word/{cardId}")
-    public Boolean deleteTranslationByCardId(@PathVariable Long cardId, @RequestBody TranslationDeleteDto translation) {
+    public CardDto deleteTranslationByCardId(@PathVariable Long cardId, @RequestBody TranslationDeleteDto translation) {
         return cardService.deleteTranslationByCardId(cardId, translation);
     }
 

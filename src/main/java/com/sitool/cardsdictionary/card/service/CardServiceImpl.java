@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CardServiceImpl implements CardService{
+public class CardServiceImpl implements CardService {
 
     private final CardRepository cardRepository;
     private final TranslationRepository translationRepository;
@@ -32,21 +32,21 @@ public class CardServiceImpl implements CardService{
 
         Optional<Card> cardExist = cardRepository.findByNameIgnoreCase(card.getName());
 
-        if(cardExist.isPresent()){
+        if (cardExist.isPresent()) {
             throw new WordAlreadyExistsException("Word already exists: " + card.getName());
         }
 
         Card newCard = new Card(card.getName());
 
-       if (!card.getTranslations().isEmpty()) {
+        if (!card.getTranslations().isEmpty()) {
             for (TranslationDto translation : card.getTranslations()) {
                 Translation newTranslation = new Translation(translation.getCode(), translation.getValue(), newCard);
                 newCard.addTranslation(newTranslation);
                 translationRepository.save(newTranslation);
             }
-       }
+        }
 
-       newCard = cardRepository.save(newCard);
+        newCard = cardRepository.save(newCard);
 
         return modelMapper.map(newCard, CardDto.class);
     }
@@ -78,9 +78,8 @@ public class CardServiceImpl implements CardService{
     public CardDto addTranslationById(Long cardId, TranslationDto translation) {
         Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
 
-        Optional<Translation> transactionExist = translationRepository.findByCode(translation.getCode());
 
-        if(transactionExist.isPresent()){
+        if (card.hasTranslationWithCode(translation.getCode())) {
             throw new TransalationAlreadyExistsException("Translation " + translation.getCode() + " already exists: " + translation.getValue());
         }
 
@@ -91,13 +90,30 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public Boolean updateTranslationById(Long cardId, TranslationDto translation) {
-        return null;
+    @Transactional
+    public CardDto updateTranslationById(Long cardId, TranslationDto translation) {
+        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+
+        Translation translationToChange = card.getTranslations().stream()
+                .filter(trCode -> trCode.getCode().equals(translation.getCode()))
+                .findFirst().orElseThrow(NotFoundException::new);
+
+        translationToChange.setValue(translation.getValue());
+        return modelMapper.map(card, CardDto.class);
     }
 
     @Override
-    public Boolean deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation) {
-        return null;
+    @Transactional
+    public CardDto deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation) {
+
+        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+        Translation translationToRemove = card.getTranslations().stream()
+                .filter(trCode -> trCode.getCode().equals(translation.getCode()))
+                .findFirst().orElseThrow(NotFoundException::new);
+
+        translationRepository.delete(translationToRemove);
+        card.removeTranslation(translationToRemove);
+        return modelMapper.map(card, CardDto.class);
     }
 
     @Override

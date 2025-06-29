@@ -17,9 +17,9 @@ public interface CardService {
 
     CardDto addTranslationById(Long cardId, TranslationDto translation);
 
-    Boolean updateTranslationById(Long cardId, TranslationDto translation);
+    CardDto updateTranslationById(Long cardId, TranslationDto translation);
 
-    Boolean deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation);
+    CardDto deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation);
 
     CardDto deleteCardById(Long cardId);
 
