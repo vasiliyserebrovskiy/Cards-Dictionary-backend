@@ -1,6 +1,7 @@
 package com.sitool.cardsdictionary.card.service;
 
 import com.sitool.cardsdictionary.card.dto.*;
+import com.sitool.cardsdictionary.card.model.Card;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface CardService {
 
     CardDto updateCardById(Long cardId, CardUpdateDto name);
 
-    Boolean addTranslationById(Long cardId, TranslationDto translation);
+    CardDto addTranslationById(Long cardId, TranslationDto translation);
 
     Boolean updateTranslationById(Long cardId, TranslationDto translation);
 

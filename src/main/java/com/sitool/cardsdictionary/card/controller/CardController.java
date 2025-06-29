@@ -35,7 +35,7 @@ public class CardController {
     }
 
     @PostMapping("/translation/word/{cardId}")
-    public Boolean addTranslationById(@PathVariable Long cardId, @RequestBody TranslationDto translation) {
+    public CardDto addTranslationById(@PathVariable Long cardId, @RequestBody TranslationDto translation) {
         return cardService.addTranslationById(cardId, translation);
     }
 
