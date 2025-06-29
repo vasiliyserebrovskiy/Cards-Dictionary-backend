@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CardService {
 
-    Boolean addCard(CardAddDto card);
+    CardDto addCard(CardAddDto card);
 
     CardDto getCardById(Long cardId);
 

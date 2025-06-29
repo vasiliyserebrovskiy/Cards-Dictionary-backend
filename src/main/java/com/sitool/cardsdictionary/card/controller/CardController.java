@@ -15,7 +15,7 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/word/add")
-    public Boolean addCard(@RequestBody CardAddDto card) {
+    public CardDto addCard(@RequestBody CardAddDto card) {
         return cardService.addCard(card);
     }
 

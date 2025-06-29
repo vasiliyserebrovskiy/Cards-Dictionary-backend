@@ -18,79 +18,54 @@ public class CardServiceImpl implements CardService{
     private final CardRepository cardRepository;
     private final ModelMapper modelMapper;
 
+
     @Override
-    public Boolean addCard(CardAddDto card) {
-        if(cardRepository.findByName(card.getName()).isPresent()) {
-            return false;
-        }
-        Card newCard = new Card(card.getName(), card.getTranslations());
-        cardRepository.save(newCard);
-        return true;
+    public CardDto addCard(CardAddDto card) {
+        return null;
     }
 
     @Override
     public CardDto getCardById(Long cardId) {
-        Card card =  cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        return modelMapper.map(card, CardDto.class);
-        //return new CardDto(card.getId(), card.getName(), card.getTranslations());
+        return null;
     }
 
     @Override
     public CardDto getCardByName(String name) {
-        Card card =  cardRepository.findByName(name).orElseThrow(NotFoundException::new);
-        return new CardDto(card.getId(), card.getName(), card.getTranslations());
+        return null;
     }
 
     @Override
-    public CardDto updateCardById(Long cardId, CardUpdateDto cardUpdateDto) {
-        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        card.setName(cardUpdateDto.getName());
-        cardRepository.save(card);
-        return new CardDto(card.getId(), card.getName(), card.getTranslations());
+    public CardDto updateCardById(Long cardId, CardUpdateDto name) {
+        return null;
     }
-    //TODO: need to fix error: write null as key !
+
     @Override
     public Boolean addTranslationById(Long cardId, TranslationDto translation) {
-        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        card.addTranslation(translation.getCode(), translation.getValue());
-        cardRepository.save(card);
-        return true; // TODO: need to think about this
+        return null;
     }
 
     @Override
     public Boolean updateTranslationById(Long cardId, TranslationDto translation) {
-        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        card.updateTranslation(translation.getCode(), translation.getValue());
-        cardRepository.save(card);
-        return true; // TODO: need to think about this
+        return null;
     }
 
     @Override
     public Boolean deleteTranslationByCardId(Long cardId, TranslationDeleteDto translation) {
-        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        card.removeTranslation(translation.getCode());
-        cardRepository.save(card);
-        return true; //TODO: need to think about this
+        return null;
     }
 
     @Override
     public CardDto deleteCardById(Long cardId) {
-        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        cardRepository.deleteById(cardId);
-        return new CardDto(card.getId(), card.getName(), card.getTranslations());
+        return null;
     }
 
     @Override
     public List<CardDto> getAllCards() {
-
-        return cardRepository.findAll().stream().
-                map(card -> new CardDto(card.getId(), card.getName(), card.getTranslations()))
-                .toList();
+        return List.of();
     }
 
     @Override
     public List<CardDto> getRandomCards(Long number) {
-        //TODO: Need to implement
-        return null;
+        return List.of();
     }
 }

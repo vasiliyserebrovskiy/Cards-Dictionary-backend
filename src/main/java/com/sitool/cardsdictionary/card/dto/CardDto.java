@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -12,5 +12,5 @@ import java.util.Map;
 public class CardDto {
     private Long id;
     private String name;
-    private Map<String, String> translations;
+    private List<TranslationDto> translations;
 }
