@@ -1,6 +1,7 @@
 package com.sitool.cardsdictionary.card.service;
 
 import com.sitool.cardsdictionary.card.dao.CardRepository;
+import com.sitool.cardsdictionary.card.dao.TranslationRepository;
 import com.sitool.cardsdictionary.card.dto.*;
 import com.sitool.cardsdictionary.card.dto.exceptions.NotFoundException;
 import com.sitool.cardsdictionary.card.model.Card;
@@ -16,6 +17,7 @@ import java.util.List;
 public class CardServiceImpl implements CardService{
 
     private final CardRepository cardRepository;
+    private final TranslationRepository translationRepository;
     private final ModelMapper modelMapper;
 
 

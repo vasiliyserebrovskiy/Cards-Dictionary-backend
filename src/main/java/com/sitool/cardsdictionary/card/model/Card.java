@@ -1,42 +1,32 @@
 package com.sitool.cardsdictionary.card.model;
 
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
-@EqualsAndHashCode(of = {"id", "name"})
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"id"})
+@Entity
+@Table(name="cards")
 public class Card {
-    private static final AtomicInteger counter = new AtomicInteger(0); // for card id generation
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Setter
     private String name;
-    private Map<String, String> translations = new HashMap<>();
+    @OneToMany(mappedBy = "card") //mappedBy in parrententry
+    private List<Translation> translations = new ArrayList<>();
 
     public Card(String name) {
-        this.id = counter.incrementAndGet();
         this.name = name;
     }
 
-    public Card(String name, Map<String, String> translations) {
-        this.id = counter.incrementAndGet();
-        this.name = name;
-        this.translations = translations;
-    }
-
-    public boolean addTranslation(String languageCode, String value) {
-        return translations.put(languageCode, value) == null;
-    }
-
-    public String updateTranslation(String languageCode, String value) {
-        return translations.put(languageCode, value);
-    }
-
-    public boolean removeTranslation(String languageCode) {
-        return translations.remove(languageCode) == null;
-    }
+    public void addTranslation(Translation translation) {translations.add(translation);}
 }

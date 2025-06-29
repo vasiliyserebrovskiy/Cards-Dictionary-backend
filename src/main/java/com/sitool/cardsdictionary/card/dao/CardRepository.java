@@ -1,21 +1,8 @@
 package com.sitool.cardsdictionary.card.dao;
 
 import com.sitool.cardsdictionary.card.model.Card;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
+public interface CardRepository extends JpaRepository<Card, Long> {
 
-public interface CardRepository {
-
-    Card save(Card card);
-
-    Optional<Card> findById(Long id);
-
-    Optional<Card> findByName(String name);
-
-    void deleteById(Long id);
-
-    List<Card> findAll();
-
-    List<Card> getNumbersOfCards(Integer number);
 }
