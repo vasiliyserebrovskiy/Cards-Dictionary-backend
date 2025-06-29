@@ -4,20 +4,19 @@ import com.sitool.cardsdictionary.card.dao.CardRepository;
 import com.sitool.cardsdictionary.card.dto.*;
 import com.sitool.cardsdictionary.card.dto.exceptions.NotFoundException;
 import com.sitool.cardsdictionary.card.model.Card;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class CardServiceImpl implements CardService{
 
     private final CardRepository cardRepository;
-
-    @Autowired
-    public CardServiceImpl(CardRepository cardRepository) {
-        this.cardRepository = cardRepository;
-    }
+    private final ModelMapper modelMapper;
 
     @Override
     public Boolean addCard(CardAddDto card) {
@@ -32,7 +31,8 @@ public class CardServiceImpl implements CardService{
     @Override
     public CardDto getCardById(Long cardId) {
         Card card =  cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
-        return new CardDto(card.getId(), card.getName(), card.getTranslations());
+        return modelMapper.map(card, CardDto.class);
+        //return new CardDto(card.getId(), card.getName(), card.getTranslations());
     }
 
     @Override

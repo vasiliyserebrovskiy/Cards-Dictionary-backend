@@ -2,20 +2,17 @@ package com.sitool.cardsdictionary.card.controller;
 
 import com.sitool.cardsdictionary.card.dto.*;
 import com.sitool.cardsdictionary.card.service.CardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class CardController {
 
     private final CardService cardService;
-
-    @Autowired
-    public CardController(CardService cardService) {
-        this.cardService = cardService;
-    }
 
     @PostMapping("/word/add")
     public Boolean addCard(@RequestBody CardAddDto card) {
