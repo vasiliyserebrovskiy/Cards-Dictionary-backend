@@ -19,7 +19,7 @@ public class Card {
     private long id;
     @Setter
     private String name;
-    @OneToMany(mappedBy = "card") //mappedBy in parrententry
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL) //mappedBy in parrententry
     private List<Translation> translations = new ArrayList<>();
 
     public Card(String name) {

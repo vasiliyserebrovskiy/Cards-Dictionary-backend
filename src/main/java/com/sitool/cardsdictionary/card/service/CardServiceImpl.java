@@ -9,7 +9,6 @@ import com.sitool.cardsdictionary.card.dto.exceptions.WordAlreadyExistsException
 import com.sitool.cardsdictionary.card.model.Card;
 import com.sitool.cardsdictionary.card.model.Translation;
 import org.springframework.transaction.annotation.Transactional;
-//import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -117,17 +116,22 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    @Transactional
     public CardDto deleteCardById(Long cardId) {
-        return null;
+        Card card = cardRepository.findById(cardId).orElseThrow(NotFoundException::new);
+        cardRepository.delete(card);
+        return modelMapper.map(card, CardDto.class);
     }
 
     @Override
     public List<CardDto> getAllCards() {
-        return List.of();
+        List<Card> allCards = cardRepository.findAll();
+        return allCards.stream().map(c -> modelMapper.map(c, CardDto.class)).toList();
     }
 
     @Override
     public List<CardDto> getRandomCards(Long number) {
+        //TODO: need to be implemented!
         return List.of();
     }
 }

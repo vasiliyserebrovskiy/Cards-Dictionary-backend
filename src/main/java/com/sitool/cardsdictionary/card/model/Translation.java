@@ -18,6 +18,7 @@ public class Translation {
     @Setter
     private String value;
     @ManyToOne
+    @JoinColumn(name = "card_id")
     private Card card;
 
     public Translation(String code, String value) {
