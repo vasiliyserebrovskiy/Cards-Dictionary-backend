@@ -41,7 +41,7 @@ public class CardServiceImpl implements CardService {
             for (TranslationDto translation : card.getTranslations()) {
                 Translation newTranslation = new Translation(translation.getCode(), translation.getValue(), newCard);
                 newCard.addTranslation(newTranslation);
-                translationRepository.save(newTranslation);
+               // translationRepository.save(newTranslation);
             }
         }
 
@@ -110,7 +110,7 @@ public class CardServiceImpl implements CardService {
                 .filter(trCode -> trCode.getCode().equals(translation.getCode()))
                 .findFirst().orElseThrow(NotFoundException::new);
 
-        translationRepository.delete(translationToRemove);
+        //translationRepository.delete(translationToRemove); because we use orphanRemoval = true
         card.removeTranslation(translationToRemove);
         return modelMapper.map(card, CardDto.class);
     }

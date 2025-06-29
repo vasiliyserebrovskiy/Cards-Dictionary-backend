@@ -12,10 +12,13 @@ import lombok.*;
 public class Translation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
     @Setter
+    @Column(name = "code")
     private String code;
     @Setter
+    @Column(name = "value")
     private String value;
     @ManyToOne
     @JoinColumn(name = "card_id")

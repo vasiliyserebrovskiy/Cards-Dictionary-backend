@@ -2,6 +2,10 @@ spring:
   application:
     name: Cards-Dictionary-App
 
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+
   datasource:
     url: jdbc:postgresql://cards-cards-dictionary.c.aivencloud.com:12753/defaultdb
     username: avnadmin
@@ -9,5 +13,5 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
