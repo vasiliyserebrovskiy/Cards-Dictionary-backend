@@ -1,0 +1,14 @@
+package com.sitool.cardsdictionary.accounting.dto;
+
+import lombok.Getter;
+
+import java.util.Set;
+
+
+@Getter
+public class UserDto {
+       private String login;
+       private String firstName;
+       private String lastName;
+       private Set<String> roles;
+}
