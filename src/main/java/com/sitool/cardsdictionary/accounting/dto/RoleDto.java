@@ -5,7 +5,8 @@ import lombok.Getter;
 import java.util.Set;
 
 @Getter
-public class RolesDto {
+public class RoleDto {
     private String login;
     private Set<String> roles;
+
 }

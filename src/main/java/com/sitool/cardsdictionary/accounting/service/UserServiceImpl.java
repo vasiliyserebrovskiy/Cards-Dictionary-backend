@@ -3,7 +3,7 @@ package com.sitool.cardsdictionary.accounting.service;
 import com.sitool.cardsdictionary.accounting.dao.RoleRepository;
 import com.sitool.cardsdictionary.accounting.dao.UserRepository;
 import com.sitool.cardsdictionary.accounting.dto.AddUserDto;
-import com.sitool.cardsdictionary.accounting.dto.RolesDto;
+import com.sitool.cardsdictionary.accounting.dto.RoleDto;
 import com.sitool.cardsdictionary.accounting.dto.UpdateUserDto;
 import com.sitool.cardsdictionary.accounting.dto.UserDto;
 import com.sitool.cardsdictionary.accounting.dto.exceptions.InvalidDataException;
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public RolesDto changeRollList(String login, String role, boolean isAddRole) {
+    public RoleDto changeRollList(String login, String role, boolean isAddRole) {
         User user = userRepository.findByLogin(login).orElseThrow(UserNotFoundException::new);
 
         Role userRole = roleRepository.findByRoleName(role).orElseThrow(RoleNotFoundException::new);
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidDataException();
         }
         userRepository.save(user);
-        return modelMapper.map(user, RolesDto.class);
+        return modelMapper.map(user, RoleDto.class);
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.sitool.cardsdictionary.accounting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -37,7 +40,6 @@ public class User {
     )
     @Singular
     private Set<Role> roles = new HashSet<>();
-
 
     public boolean addRole(Role role) {
         return roles.add(role);
