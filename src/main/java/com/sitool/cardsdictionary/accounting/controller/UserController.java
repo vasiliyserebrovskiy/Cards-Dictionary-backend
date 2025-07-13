@@ -6,7 +6,10 @@ import com.sitool.cardsdictionary.accounting.dto.UpdateUserDto;
 import com.sitool.cardsdictionary.accounting.dto.UserDto;
 import com.sitool.cardsdictionary.accounting.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,11 +23,11 @@ public class UserController {
         return userService.registerNewUser(addUserDto);
     }
 
-//    @PostMapping("/login")
-//    public UserDto login(Principal principal) {
-//
-//        return userService.getUserByLogin(principal.getName()) ;
-//    }
+    @PostMapping("/login")
+    public UserDto login(Principal principal) {
+
+        return userService.getUserByLogin(principal.getName()) ;
+    }
 
     @DeleteMapping("/user/{login}")
     public UserDto deleteUser(@PathVariable String login) {
@@ -51,11 +54,11 @@ public class UserController {
         return userService.getUserByLogin(login);
     }
 
-//    @PatchMapping("/password")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void changePassword(Principal principal, @RequestHeader("X-Password") String newPassword) {
-//        userService.changePassword(principal.getName(), newPassword);
-//    }
+    @PatchMapping("/password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changePassword(Principal principal, @RequestHeader("X-Password") String newPassword) {
+        userService.changePassword(principal.getName(), newPassword);
+    }
 
 
 }
