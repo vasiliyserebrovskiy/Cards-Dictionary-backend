@@ -15,12 +15,13 @@ import com.sitool.cardsdictionary.accounting.model.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, CommandLineRunner {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
@@ -33,8 +34,11 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByLogin(addUserDto.getLogin())) {
             throw new UserExistsException();
         }
-
         User newUser = modelMapper.map(addUserDto, User.class);
+        if (!roleRepository.existsByRoleName("user")) {
+            Role adminRole = new Role("user");
+            roleRepository.save(adminRole);
+        }
         Role userRole = roleRepository.findByRoleName("user").orElseThrow(RoleNotFoundException::new);
         newUser.addRole(userRole);
         String encodedPassword = passwordEncoder.encode(addUserDto.getPassword());
@@ -48,7 +52,7 @@ public class UserServiceImpl implements UserService {
     public UserDto deleteUser(String login) {
         User user = userRepository.findByLogin(login).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
-        return modelMapper.map(user, UserDto.class) ;
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -63,7 +67,7 @@ public class UserServiceImpl implements UserService {
             user.setLastName(updateUserDto.getLastName());
         }
         userRepository.save(user);
-        return  modelMapper.map(user, UserDto.class);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -96,5 +100,27 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByLogin(login).orElseThrow(UserNotFoundException::new);
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void run(String... args) throws Exception {
+        if (!roleRepository.existsByRoleName("admin")) {
+            Role adminRole = new Role("admin");
+            roleRepository.save(adminRole);
+        }
+        if (!userRepository.existsByLogin("admin@admin.com")) {
+            Role userRole = roleRepository.findByRoleName("admin")
+                    .orElseThrow(RoleNotFoundException::new);
+            User admin = User.builder()
+                    .login("admin@admin.com")
+                    .password(passwordEncoder.encode("admin"))
+                    .firstName("Admin")
+                    .lastName("Admin")
+                    .build();
+
+            admin.addRole(userRole);
+            userRepository.save(admin);
+        }
     }
 }

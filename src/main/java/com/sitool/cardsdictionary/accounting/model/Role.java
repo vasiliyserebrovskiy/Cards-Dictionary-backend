@@ -11,6 +11,8 @@ import java.util.Set;
 @NoArgsConstructor
 //@AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "roleName"})
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role {

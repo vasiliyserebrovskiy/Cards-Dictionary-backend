@@ -26,26 +26,7 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable()); // stateless server
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/account/register", "/word/**")
-                    .permitAll()
-//                .requestMatchers("/account/user/{login}/role/{role}")
-//                .hasRole(Role.ADMINISTRATOR.name())// here we write ENUM Role without "ROLE_" part
-//                .requestMatchers(HttpMethod.PATCH, "/account/user/{login}")
-//                .access(new WebExpressionAuthorizationManager("#login == authentication.name"))
-//                .requestMatchers(HttpMethod.DELETE, "/account/user/{login}")
-//                .access(new WebExpressionAuthorizationManager("#login == authentication.name or hasRole('ADMINISTRATOR')"))
-//                .requestMatchers(HttpMethod.POST, "/forum/post/{author}")
-//                .access(new WebExpressionAuthorizationManager("#author == authentication.name"))
-//                .requestMatchers(HttpMethod.PATCH, "/forum/post/{id}/comment/{author}")
-//                .access(new WebExpressionAuthorizationManager("#author == authentication.name"))
-//                .requestMatchers(HttpMethod.PATCH, "/forum/post/{id}")
-//                .access(((authentication, context) ->
-//                        new AuthorizationDecision(webSecurity.checkPostAuthor(context.getVariables().get("id"), authentication.get().getName()))))
-//                .requestMatchers(HttpMethod.DELETE, "/forum/post/{id}")
-//                .access((authentication, context) -> {
-//                    boolean isAuthor = webSecurity.checkPostAuthor(context.getVariables().get("id"), authentication.get().getName());
-//                    boolean isModerator = context.getRequest().isUserInRole(Role.MODERATOR.name());
-//                    return new AuthorizationDecision(isAuthor || isModerator);
-//                })
+                .permitAll()
                 .anyRequest()
                 .authenticated());
         return http.build();

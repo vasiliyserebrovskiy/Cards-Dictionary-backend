@@ -38,7 +38,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @Singular
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
     public boolean addRole(Role role) {

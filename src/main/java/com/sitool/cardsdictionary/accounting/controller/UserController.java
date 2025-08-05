@@ -20,6 +20,7 @@ public class UserController {
 
     @PostMapping("/register")
     public UserDto registerNewUser(@RequestBody AddUserDto addUserDto) {
+        System.out.println("WE ARE IN registerNewUser in CONTROLLER");
         return userService.registerNewUser(addUserDto);
     }
 
